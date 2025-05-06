@@ -1,6 +1,6 @@
 package rpg.model.statuseffects;
 
-import rpg.model.Character;
+import rpg.model.characters.GCharacter;
 
 public class PoisonEffect implements StatusEffect {
     private int duration;
@@ -12,7 +12,7 @@ public class PoisonEffect implements StatusEffect {
     }
 
     @Override
-    public void applyEffect(Character target) {
+    public void applyEffect(GCharacter target) {
         if (duration > 0) {
             target.takeDamage(damagePerTurn);
             duration--;
@@ -30,3 +30,4 @@ public class PoisonEffect implements StatusEffect {
         return duration <= 0;
     }
 }
+

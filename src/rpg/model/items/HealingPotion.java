@@ -1,6 +1,6 @@
-package rpg.mode.items;
+package rpg.model.items;
 
-import rpg.model.*;
+import rpg.model.characters.GCharacter;
 
 public class HealingPotion extends Item {
     private int healAmount;
@@ -11,8 +11,8 @@ public class HealingPotion extends Item {
     }
 
     @Override
-    public void use(Character user, Character target) {
-        target.heal(healAmount);
+    public void use(GCharacter user, GCharacter target) {
+        target.heal(healAmount);  // Assuming GCharacter has heal() method
         System.out.println(user.getName() + " uses " + name + " on " + target.getName() + "!");
     }
 }

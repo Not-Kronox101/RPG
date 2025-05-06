@@ -1,5 +1,7 @@
 package rpg.model.moves;
 
+import rpg.model.characters.GCharacter; 
+
 public abstract class Move {
     protected String name;
     protected String description;
@@ -18,5 +20,5 @@ public abstract class Move {
     }
 
     // This is the key method each move must implement
-    public abstract void execute(Character user, Character target);
+    public abstract void execute(GCharacter user, GCharacter target);
 }

@@ -1,6 +1,6 @@
 package rpg.model.moves;
 
-import rpg.model.*;
+import rpg.model.characters.GCharacter;
 
 public class AttackMove extends Move {
     private int power;
@@ -11,8 +11,8 @@ public class AttackMove extends Move {
     }
 
     @Override
-    public void execute(Character user, Character target) {
-        int damage = user.attack + power;
+    public void execute(GCharacter user, GCharacter target) {
+        int damage = user.getAttack() + power;
         target.takeDamage(damage);
     }
 }

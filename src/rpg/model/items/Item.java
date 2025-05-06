@@ -1,5 +1,7 @@
 package rpg.model.items;
 
+import rpg.model.characters.GCharacter;
+
 public abstract class Item {
     protected String name;
     protected String description;
@@ -9,5 +11,5 @@ public abstract class Item {
         this.description = description;
     }
 
-    public abstract void use(Character user, Character target);
+    public abstract void use(GCharacter user, GCharacter target);
 }

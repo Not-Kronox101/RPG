@@ -1,7 +1,8 @@
 package rpg.model.characters;
 import java.util.List;
+import rpg.model.moves.*;
 
-public abstract class Character {
+public abstract class GCharacter {
     protected String name;
     protected int maxHP;
     protected int currentHP;
@@ -9,7 +10,7 @@ public abstract class Character {
     protected int defense;
     protected List<Move> moves;
 
-    public Character(String name, int maxHP, int attack, int defense, List<Move> moves) {
+    public GCharacter(String name, int maxHP, int attack, int defense, List<Move> moves) {
         this.name = name;
         this.maxHP = maxHP;
         this.currentHP = maxHP;
@@ -24,6 +25,14 @@ public abstract class Character {
 
     public int getCurrentHP() {
         return currentHP;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+    
+    public int getDefense() {
+        return defense;
     }
 
     public boolean isAlive() {
@@ -47,5 +56,5 @@ public abstract class Character {
         return moves;
     }
 
-    public abstract Move chooseMove(Character opponent);  // This is overridden differently for Player and Enemy
+    public abstract Move chooseMove(GCharacter opponent);  // This is overridden differently for Player and Enemy
 }

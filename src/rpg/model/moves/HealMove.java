@@ -1,6 +1,6 @@
 package rpg.model.moves;
 
-import rpg.model.*;
+import rpg.model.characters.GCharacter;
 
 public class HealMove extends Move {
     private int healAmount;
@@ -11,7 +11,7 @@ public class HealMove extends Move {
     }
 
     @Override
-    public void execute(Character user, Character target) {
+    public void execute(GCharacter user, GCharacter target) {
         user.heal(healAmount);
     }
 }

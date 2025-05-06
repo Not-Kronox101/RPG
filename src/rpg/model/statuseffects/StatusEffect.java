@@ -1,4 +1,4 @@
-package rpg.model.status;
+package rpg.model;
 
 public interface StatusEffect {
     void applyEffect(Character target);

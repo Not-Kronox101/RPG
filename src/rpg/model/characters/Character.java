@@ -1,5 +1,4 @@
-package rpg.model;
-
+package rpg.model.characters;
 import java.util.List;
 
 public abstract class Character {

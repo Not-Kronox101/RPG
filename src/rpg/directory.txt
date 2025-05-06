@@ -1,0 +1,17 @@
+src/
+└── rpg/
+    └── model/
+        ├── Character.java (Done)
+        ├── Player.java (Done)
+        ├── Enemy.java (Done)
+        ├── Move.java (Done)
+        ├── AttackMove.java (Done)
+        ├── HealMove.java (Done)
+        ├── Item.java (Done)
+        ├── HealingPotion.java (Done)
+        ├── StatusEffect.java (Done)
+        ├── PoisonEffect.java (Done)
+        ├── AIController.java
+    └── logic/
+        └── Game.java
+    └── ui/

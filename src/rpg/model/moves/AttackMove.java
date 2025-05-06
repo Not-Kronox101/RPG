@@ -1,4 +1,4 @@
-package rpg.model;
+package rpg.model.moves;
 
 import rpg.model.*;
 

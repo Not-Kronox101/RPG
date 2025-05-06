@@ -1,4 +1,4 @@
-package rpg.model;
+package rpg.model.moves;
 
 public abstract class Move {
     protected String name;

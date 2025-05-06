@@ -1,4 +1,4 @@
-package rpg.model;
+package rpg.model.statuseffects;
 
 import rpg.model.Character;
 

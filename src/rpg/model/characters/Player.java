@@ -1,4 +1,4 @@
-package rpg.model;
+package rpg.model.characters;
 
 import java.util.List;
 import java.util.Scanner;

@@ -1,4 +1,4 @@
-package rpg.model;
+package rpg.mode.items;
 
 import rpg.model.*;
 

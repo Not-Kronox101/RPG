@@ -1,4 +1,4 @@
-package rpg.model;
+package rpg.model.items;
 
 public abstract class Item {
     protected String name;

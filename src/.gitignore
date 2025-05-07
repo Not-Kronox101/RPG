@@ -1,0 +1,27 @@
+# Compiled class files
+*.class
+
+# Log files
+*.log
+
+# Package files (JAR, WAR, EAR, etc.)
+*.jar
+*.war
+*.ear
+
+# Project-specific build output directories (common examples)
+out/
+target/
+bin/
+build/
+
+# IDE-specific files and directories (common examples)
+.idea/
+.classpath
+.project
+*.iml
+.settings/
+
+# Operating system specific files
+.DS_Store
+Thumbs.db

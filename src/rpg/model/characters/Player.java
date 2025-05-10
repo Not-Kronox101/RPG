@@ -17,8 +17,9 @@ public class Player extends GCharacter {
             System.out.println((i + 1) + ". " + moves.get(i).getName());
         }
 
-        Scanner scanner = new Scanner(System.in);
-        int choice = scanner.nextInt();
-        return moves.get(choice - 1); // Get the selected move from the list
+        try (Scanner scanner = new Scanner(System.in)) {
+            int choice = scanner.nextInt();
+            return moves.get(choice - 1); // Get the selected move from the list
+        }
     }
 }

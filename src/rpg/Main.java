@@ -7,6 +7,6 @@ public class Main {
     public static void main(String[] args) {
         // Create an instance of the Game class and start it
         Game game = new Game();
-        game.startGame();
+        game.showMainMenu();
     }
 }

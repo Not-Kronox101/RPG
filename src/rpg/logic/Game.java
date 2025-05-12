@@ -6,15 +6,22 @@ import rpg.model.moves.AttackMove;
 import rpg.model.moves.HealMove;
 import rpg.model.moves.Move;
 
+import javax.swing.*;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
+
+import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Game {
 
     private Player player;
     private Enemy enemy;
-    private final Scanner scanner = new Scanner(System.in);
 
     public Game() {
         initializeGame();
@@ -32,56 +39,123 @@ public class Game {
         enemy = new Enemy("Goblin", 50, 15, 5, enemyMoves);
     }
 
+    private void logResult(boolean playerWon) {
+        String result = playerWon ? "Victory" : "Defeat";
+        String date = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String logEntry = String.format("[%s]| Result: %s | Player HP: %d | Enemy HP: %d\n", date, result, player.getCurrentHP(), enemy.getCurrentHP());
+
+        try (FileWriter writer = new FileWriter("game_log.txt", true)) {
+            writer.write(logEntry);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error writing to log file: " + e.getMessage());
+        }
+    }
+
     public void startGame() {
         boolean gameOver = false;
-        System.out.println("=== BATTLE START ===");
+        JOptionPane.showMessageDialog(null, "=== BATTLE START ===");
 
         while (!gameOver) {
             playerTurn();
             if (enemy.getCurrentHP() <= 0) {
-                System.out.println("You defeated the enemy!");
+                JOptionPane.showMessageDialog(null, "You defeated the enemy!");
+                logResult(true);
                 gameOver = true;
-                continue;
+               continue;
             }
 
             enemyTurn();
             if (player.getCurrentHP() <= 0) {
-                System.out.println("You were defeated...");
+                JOptionPane.showMessageDialog(null, "You were defeated...");
+                logResult(false);
                 gameOver = true;
             }
         }
+    JOptionPane.showMessageDialog(null, "=== GAME OVER ===");
+}
 
-        System.out.println("=== GAME OVER ===");
-    }
+
 
     private void playerTurn() {
-        System.out.println("\nYour Turn:");
-        System.out.println(player.getName() + " HP: " + player.getCurrentHP() + " | " + enemy.getName() + " HP: " + enemy.getCurrentHP());
+        String status = player.getName() + " HP: " + player.getCurrentHP() + "\n" +
+                        enemy.getName() + " HP: " + enemy.getCurrentHP();
 
         List<Move> moves = player.getMoves();
+        String[] moveNames = new String[moves.size()];
         for (int i = 0; i < moves.size(); i++) {
-            System.out.println((i + 1) + ". " + moves.get(i).getName() + " - " + moves.get(i).getDescription());
+            moveNames[i] = moves.get(i).getName() + " - " + moves.get(i).getDescription();
         }
 
-        int choice = -1;
-        while (choice < 1 || choice > moves.size()) {
-            System.out.print("Choose your move (1-" + moves.size() + "): ");
-            if (scanner.hasNextInt()) {
-                choice = scanner.nextInt();
-            } else {
-                scanner.next(); // consume invalid input
-                System.out.println("Invalid input. Enter a number.");
+        String selectedMoveStr = (String) JOptionPane.showInputDialog(
+                null,
+                status + "\nChoose your move:",
+                "Your Turn",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                moveNames,
+                moveNames[0]
+        );
+
+        int selectedIndex = -1;
+        for (int i = 0; i < moveNames.length; i++) {
+            if (moveNames[i].equals(selectedMoveStr)) {
+                selectedIndex = i;
+                break;
             }
         }
 
-        Move selectedMove = moves.get(choice - 1);
-        selectedMove.execute(player, enemy);
+        if (selectedIndex != -1) {
+            Move selectedMove = moves.get(selectedIndex);
+            selectedMove.execute(player, enemy);
+        } else {
+            JOptionPane.showMessageDialog(null, "No move selected! Turn skipped.");
+        }
     }
 
     private void enemyTurn() {
-        System.out.println("\nEnemy Turn:");
         Move move = enemy.getMoves().get(0); // Always attack
         move.execute(enemy, player);
-        System.out.println(player.getName() + " HP: " + player.getCurrentHP());
+
+        String status = player.getName() + " HP: " + player.getCurrentHP() + "\n" +
+                        enemy.getName() + " used " + move.getName() + "!";
+        JOptionPane.showMessageDialog(null, status, "Enemy Turn", JOptionPane.INFORMATION_MESSAGE);
     }
+
+    private void showGameHistory() {
+    try {
+        String content = new String(Files.readAllBytes(Paths.get("game_log.txt")));
+        JOptionPane.showMessageDialog(null, content, "Game History", JOptionPane.INFORMATION_MESSAGE);
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "No game history found.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+    public void showMainMenu() {
+    while (true) {
+        String[] options = {"New Game", "View History", "Exit"};
+        int choice = JOptionPane.showOptionDialog(
+                null,
+                "Welcome to Java RPG!",
+                "Main Menu",
+                JOptionPane.DEFAULT_OPTION,
+                JOptionPane.INFORMATION_MESSAGE,
+                null,
+                options,
+                options[0]
+        );
+
+        switch (choice) {
+            case 0 -> {
+                initializeGame();
+                startGame();
+            }
+            case 1 -> showGameHistory();
+            case 2, JOptionPane.CLOSED_OPTION -> {
+                JOptionPane.showMessageDialog(null, "Thanks for playing!");
+                return;
+            }
+        }
+    }
+}
+
 }
